@@ -1,0 +1,79 @@
+{
+    "settings":{
+        "deltaT": 86400,
+        "steps": 5000,
+        "writeSteps":250,
+        "output": "/home/runner/NBody/results",
+        "format": "csv",
+        "verbose": false
+    },
+    "random-elements":{
+      "active": false,
+      "nElements":300,
+      "mass":[2e20,2e40],
+      "position":[
+            [-1e15,1e15],
+            [-1e15,1e15],
+            [-1e15,1e15]
+        ],
+        "velocity":[
+            [0,0],
+            [0,0],
+            [0,0]]
+    },
+    "elements": [
+        {
+            "name":"Sun",
+            "mass":2e30,
+            "position":[0,0,0],
+            "velocity":[0,0,0]
+        },
+        {
+            "name":"Earth",
+            "mass":6e24,
+            "position":[1.47e11,0,0],
+            "velocity":[0,3e4,0]
+        },
+        {
+            "name":"Mars",
+            "mass":6.42e23,
+            "position":[2.5e11,0,0],
+            "velocity":[0,23e3,0]
+        },
+        {
+	       "name":"Mercury",
+	       "mass":3.30104e23,
+	       "position":[6.9817079e10,0,0],
+	       "velocity":[0,56133.31,0]
+        },
+        {
+	       "name":"Venus",
+	       "mass":4.86732e24,
+	       "position":[1.0894185e11,0,0],
+	       "velocity":[0,34806.5,0]
+        },
+        {
+	       "name":"Jupiter",
+	       "mass":1.89813e27,
+	       "position":[8.1608146e11, 0, 0],
+	       "velocity":[0, 13706.5, 0]
+        },{
+	       "name":"Saturn",
+	       "mass":5.68319e26,
+	       "position":[1.5039834e12, 0, 0],
+	       "velocity":[0,9350,0]
+        },
+        {
+	       "name":"Uranus",
+	       "mass":8.68103e25,
+	       "position":[3.00638940e12,0,0],
+	       "velocity":[0,6632,0]
+        },
+        {
+	       "name":"Neptune",
+	       "mass":1.02410e26,
+	       "position":[4.5368743e12,0,0],
+	       "velocity":[0, 5460,0]
+        }
+    ]
+}
