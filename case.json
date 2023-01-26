@@ -2,7 +2,7 @@
     "settings":{
         "deltaT": 86400,
         "steps": 5000,
-        "writeSteps":250,
+        "writeSteps":20,
         "output": "/home/runner/NBody/results",
         "format": "csv",
         "verbose": false

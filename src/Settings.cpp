@@ -48,17 +48,17 @@ int Settings::load(const char *file_path) {
       this->randomSettings.maxVelocity[1] = rl["velocity"][1][1].asDouble();
       this->randomSettings.maxVelocity[2] = rl["velocity"][2][1].asDouble();
       Json::Value elementsList = root["elements"];
-      std::for_each(elementsList.begin(), elementsList.end(),
-                    [&](const Json::Value &e) {
-                      Element temp;
-                      temp.name = e["name"].asString();
-                      temp.mass = e["mass"].asDouble();
-                      for (int jj = 0; jj < 3; jj++) {
-                        temp.position[jj] = e["position"][jj].asDouble();
-                        temp.velocity[jj] = e["velocity"][jj].asDouble();
-                      }
-                      this->elements.push_back(temp);
-                    });
+      std::for_each(
+          elementsList.begin(), elementsList.end(), [&](const Json::Value &e) {
+            Element temp;
+            temp.name = e["name"].asString();
+            temp.mass = e["mass"].asDouble();
+            for (int jj = 0; jj < 3; jj++) {
+              temp.position[jj] = e["position"][jj].asDouble();
+              temp.velocity[jj] = e["velocity"][jj].asDouble() * temp.mass;
+            }
+            this->elements.push_back(temp);
+          });
       this->nElem = this->elements.size();
     } catch (Json::RuntimeError &e) {
       std::cout << "Case Reading Error: " << e.what() << std::endl;

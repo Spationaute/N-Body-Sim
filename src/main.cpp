@@ -33,6 +33,7 @@ int main(int argn, char *argv[]) {
 
   Hyperphysics physics(nElem);
   physics.setDt(simDeltaT);
+
   if (settings.getVerbose())
     physics.setVerbose(true);
 
@@ -44,8 +45,8 @@ int main(int argn, char *argv[]) {
   int ii = 0;
   std::vector<Element> elementList = settings.getElements();
   std::for_each(elementList.begin(), elementList.end(), [&](Element &e) {
-    physics.setElemPosition(ii, e.position);
-    physics.setElemVelocity(ii, e.velocity);
+    physics.setElemPosition(ii, e.position[0], e.position[1], e.position[2]);
+    physics.setElemMomentum(ii, e.velocity[0], e.velocity[1], e.velocity[2]);
     physics.setElemName(ii, e.name);
     physics.setElemMasse(ii++, e.mass);
   });
@@ -66,7 +67,7 @@ int main(int argn, char *argv[]) {
   // Simulation Loop
   char filePath[255];
   char colFilePath[255];
-  for (int i = 1; i < step; ++i) {
+  for (int i = 0; i < step; ++i) {
     snprintf(filePath, 255, "%s/data.%i.csv", outPath.c_str(), i);
     snprintf(colFilePath, 255, "%s/col.csv", outPath.c_str());
     physics.step();
@@ -86,9 +87,9 @@ int main(int argn, char *argv[]) {
         std::cout << "Cannot open file: " << colFilePath << std::endl;
         return 1;
       }
-      colFile << "Time, Element #1, Element #2" << std::endl;
-      colFile << physics.getColisionResume();
-      colFile.close();
+        colFile << "Time, Element #1, Element #2" << std::endl;
+        colFile << physics.getColisionResume();
+        colFile.close();
     }
   }
   return 0;

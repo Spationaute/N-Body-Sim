@@ -32,11 +32,6 @@ void Hyperphysics::setElemPosition(int e, double x, double y, double z) {
   position.row(e) = {x, y, z};
 }
 
-void Hyperphysics::setElemPosition(int e, double pos[3]) {
-  _isElement(e);
-  position.row(e) = {pos[0], pos[1], pos[2]};
-}
-
 void Hyperphysics::setVerbose(bool set) { verbose = set; }
 
 void Hyperphysics::setElemMomentum(int e, arma::mat mom) {
@@ -44,24 +39,9 @@ void Hyperphysics::setElemMomentum(int e, arma::mat mom) {
   momentum.row(e) = mom;
 }
 
-void Hyperphysics::setElemVelocity(int e, double x, double y, double z) {
-  _isElement(e);
-  momentum.row(e) = {x * masse(e), y * masse(e), z * masse(e)};
-}
-
-void Hyperphysics::setElemVelocity(int e, double vel[3]) {
-  _isElement(e);
-  momentum.row(e) = {vel[0] * masse(e), vel[1] * masse(e), vel[2] * masse(e)};
-}
-
 void Hyperphysics::setElemMomentum(int e, double x, double y, double z) {
   _isElement(e);
   momentum.row(e) = {x, y, z};
-}
-
-void Hyperphysics::setElemMomentum(int e, double mom[3]) {
-  _isElement(e);
-  momentum.row(e) = {mom[0], mom[1], mom[2]};
 }
 
 void Hyperphysics::setElemName(int e, std::string &nameToSet) {
@@ -86,17 +66,15 @@ void Hyperphysics::randomPosition(double minPos[3], double maxPos[3]) {
   arma::mat delta = {{abs(maxPos[0] - minPos[0]), 0, 0},
                      {0, abs(maxPos[1] - minPos[1]), 0},
                      {0, 0, abs(maxPos[2] - minPos[2])}};
-  arma::mat base = arma::repmat(arma::rowvec({minPos[0], minPos[1], minPos[2]}),
-                                this->nElements, 1);
+  arma::mat base = arma::repmat(arma::rowvec({minPos[0], minPos[1], minPos[2]}),this->nElements, 1);
   this->position = position.randu() * delta + base;
 }
 void Hyperphysics::randomVelocity(double minVel[3], double maxVel[3]) {
-  arma::mat delta = {{abs(maxVel[0] - minVel[0]), 0, 0},
-                     {0, abs(maxVel[1] - minVel[1]), 0},
-                     {0, 0, abs(maxVel[2] - minVel[2])}};
-  arma::mat base = arma::repmat(arma::rowvec({minVel[0], minVel[1], minVel[2]}),
-                                this->nElements, 1);
-  this->momentum = momentum.randu() * delta + base;
+    arma::mat delta = {{abs(maxVel[0] - minVel[0]), 0, 0},
+                       {0, abs(maxVel[1] - minVel[1]), 0},
+                       {0, 0, abs(maxVel[2] - minVel[2])}};
+    arma::mat base = arma::repmat(arma::rowvec({minVel[0], minVel[1], minVel[2]}),this->nElements, 1);
+    this->momentum = momentum.randu() * delta + base;
 }
 
 void Hyperphysics::randomMasse(double min, double max) {
@@ -115,9 +93,9 @@ void Hyperphysics::step() {
 #pragma omp parallel for
   for (int ii = 0; ii < nElements; ++ii) {
     for (int jj = ii + 1; jj < nElements; ++jj) {
-      double radOne = pow(masse(ii) / 250 / 3.1416, 0.3333);
-      double radTwo = pow(masse(jj) / 250 / 3.1416, 0.3333);
-      if (arma::norm(position.row(ii) - position.row(jj)) > radOne + radTwo) {
+        double radOne = pow(masse(ii) / 250 / 3.1416, 0.3333);
+        double radTwo = pow(masse(jj) / 250 / 3.1416, 0.3333);
+        if (arma::norm(position.row(ii) - position.row(jj)) > radOne+radTwo) {
         double norm = arma::norm(position.row(jj) - position.row(ii));
         double force = dt * (-G * masse(ii) * masse(jj) / pow(norm, 2));
         momentum.row(ii) +=

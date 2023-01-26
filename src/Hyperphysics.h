@@ -25,7 +25,8 @@ public:
     momentum = arma::zeros(nElements, 3);
     masse = arma::zeros(nElements, 1);
     verbose = false;
-    currentT = 0;
+      currentT = 0;
+
 
     this->dt = 1;
     for (int ii = 0; ii < nElements; ++ii) {
@@ -45,13 +46,8 @@ public:
   void setElemName(int e, std::string &nameToSet);
   void setElemPosition(int e, arma::mat pos);
   void setElemPosition(int e, double x, double y, double z);
-  void setElemPosition(int e, double pos[3]);
   void setElemMomentum(int e, arma::mat mass);
   void setElemMomentum(int e, double x, double y, double z);
-  void setElemMomentum(int e, double mom[3]);
-  void setElemVelocity(int e, double x, double y, double z);
-  void setElemVelocity(int e, double vel[3]);
-
   void setElemMasse(int e, double x);
   void setDt(double t);
   void setAllMomentums(arma::mat toSet);

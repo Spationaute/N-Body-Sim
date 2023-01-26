@@ -18,6 +18,7 @@ cmake ..;
 make;
 mv NBody ..;
 ```
+
 To Run
 ```
 ./NBody case.json;
